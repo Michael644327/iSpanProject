@@ -1,5 +1,3 @@
-use escape;
-
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `customer_order_id` varchar(255),
@@ -78,4 +76,6 @@ INSERT INTO `product_warehousing`(`product_id`, `quantity`, `created_at`, `last_
 (18, 55, NOW(), NOW()), (18, 60, NOW(), NOW()),
 (19, 35, NOW(), NOW()), (19, 95, NOW(), NOW()),
 (20, 40, NOW(), NOW()), (20, 85, NOW(), NOW());
+
+
 
