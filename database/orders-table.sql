@@ -1,3 +1,4 @@
+-- hi
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `customer_order_id` varchar(255),
