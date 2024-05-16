@@ -45,11 +45,14 @@ include 'db_select/select_page.php';
             <!-- 搜尋列+新增商品+新增庫存 -->
             <nav class="navbar navbar-light bg-light">
                 <div class="container-fluid d-flex justify-content-between">
-                    <!-- 還沒做 -->
+                    <!-- 搜尋 -->
                     <form onsubmit="selectData()" class="d-flex" name="searchForm">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="mySearch">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="my_search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
+
+                    <!-- 搜尋結束 -->
+
 
                     <div>
                         <a class="btn btn-primary" href="add.php">
