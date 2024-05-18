@@ -4,7 +4,7 @@ $title = "修改團隊資料";
 
 $team_id = isset($_GET['team_id']) ? intval($_GET['team_id']) : 0;
 if ($team_id < 1) {
-  header('Location: /../teams.php');
+  header('Location: teams.php');
   exit;
 }
 
@@ -15,7 +15,7 @@ $sql = "SELECT * FROM teams
 
 $row = $pdo->query($sql)->fetch();
 if (empty($row)) {
-  header('Location: /../teams.php');
+  header('Location: teams.php');
   exit;
 }
 $sql2 = "SELECT * FROM teams_status";
@@ -60,7 +60,7 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="mb-3">
               <label for="leader_id" class="form-label">團長</label>
-              <input type="int" class="form-control" id="leader_id" name="leader_id" readonly value="<?= $row['leader_id'], ' - ', $row['nick_name'] ?>">
+              <input type="int" class="form-control" id="leader_id" name="leader_id" disabled value="<?= $row['leader_id'], ' - ', $row['nick_name'] ?>">
               <div class="form-text"></div>
             </div>
             <div class="mb-3">
@@ -69,17 +69,17 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
               <div class="form-text"></div>
             </div>
             <div class="mb-3">
-            <label for="tour" class="form-label">行程</label>
-                <select name="tour" id="tourSelect"></select>
+              <label for="tour" class="form-label">行程</label>
+              <select name="tour" id="tourSelect"></select>
             </div>
             <div class="mb-3">
               <label for="status" class="form-label">團隊狀態</label>
-                <?php foreach ($status as $status_i): ?>
-                  <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="team_status" id="teams_status_<?php echo $status_i['status_id']?>" value="<?php echo $status_i['status_id']?>" <?php if ($status_i['status_id'] == $row['team_status']) echo 'checked'; ?>>
-                <label class="form-check-label" for="inlineRadio<?php echo $status_i['status_id']?>"><?php echo $status_i['status_text']?></label>
-                  </div>
-                <?php endforeach; ?>
+              <?php foreach ($status as $status_i) : ?>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="team_status" id="teams_status_<?php echo $status_i['status_id'] ?>" value="<?php echo $status_i['status_id'] ?>" <?php if ($status_i['status_id'] == $row['team_status']) echo 'checked'; ?>>
+                  <label class="form-check-label" for="inlineRadio<?php echo $status_i['status_id'] ?>"><?php echo $status_i['status_text'] ?></label>
+                </div>
+              <?php endforeach; ?>
             </div>
             <button type="submit" class="btn btn-primary">修改</button>
           </form>
@@ -90,7 +90,7 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
       <div class="card">
         <div class="card-body">
         <h5 class="card-title">編輯留言</h5>
-        <?php foreach ($chats as $chat_i): ?>
+        <?php foreach ($chats as $chat_i) : ?>
           <h5>留言者：<?php echo $chat_i['nick_name']; ?></h5>
           <p>內文：<?php echo $chat_i['chat_text']; ?></p>
           <p>留言時間：<?php echo $chat_i['create_at']; ?></p>
@@ -141,38 +141,41 @@ $chats = $stmt_c->fetchAll(PDO::FETCH_ASSOC);
 
 <?php include __DIR__ . './js/scripts.php' ?>
 <script>
+  const team_title = document.form1.team_title;
+  const team_limit = document.form1.team_limit;
 
-    /* get themes */
-fetch('./api-get-themes.php')
-  .then(response => response.json())
-  .then(data => {
-    // 將回傳的資料處理並填充到 select 元素中
-    const tourSelect = document.getElementById('tourSelect');
-    data.forEach(theme => {
-      const option = document.createElement('option');
-      option.value = theme.theme_id;
-      option.textContent = `${theme.theme_id} - ${theme.theme_name}`;
-      
-      // 檢查是否該選項應該被設置為 selected
-      if (theme.theme_id == <?php echo $row['theme_id']; ?>) {
-        option.selected = true;
+  /* get themes */
+  fetch('./api-get-themes.php')
+    .then(response => response.json())
+    .then(data => {
+      // 將回傳的資料處理並填充到 select 元素中
+      const tourSelect = document.getElementById('tourSelect');
+      data.forEach(theme => {
+        const option = document.createElement('option');
+        option.value = theme.theme_id;
+        option.textContent = `${theme.theme_id} - ${theme.theme_name}`;
+
+        // 檢查是否該選項應該被設置為 selected
+        if (theme.theme_id == <?php echo $row['theme_id']; ?>) {
+          option.selected = true;
         }
-      tourSelect.appendChild(option);
-    });
-  })
-  .catch(error => console.error('Error:', error));
+        tourSelect.appendChild(option);
+      });
+    })
+    .catch(error => console.error('Error:', error));
+
 
 
   const sendData = e => {
     e.preventDefault(); // 不要讓 form1 以傳統的方式送出
 
-    nameField.style.border = '1px solid #CCCCCC';
-    nameField.nextElementSibling.innerText = '';
+    team_title.style.border = '1px solid #CCCCCC';
+    team_title.nextElementSibling.innerText = '';
     team_limit.style.border = '1px solid #CCCCCC';
     team_limit.nextElementSibling.innerText = '';
     // TODO: 欄位資料檢查
-    let isPass = true;  // 表單有沒有通過檢查
-    if (nameField.value.length < 2) {
+    let isPass = true; // 表單有沒有通過檢查
+    if (team_title.value.length < 2) {
       isPass = false;
       nameField.style.border = '1px solid red';
       nameField.nextElementSibling.innerText = '團隊名稱至少2個字';

@@ -114,10 +114,13 @@ document.addEventListener("DOMContentLoaded", function () {
               if (item.product_status == 1) {
                 option.className = "dropdown-item";
                 option.href = "#";
-                const displayName = item.product_name
-                  ? `(${item.product_id}) ${item.product_name}`
-                  : `(${item.product_id}) 無紀錄商品名稱`;
-                option.textContent = displayName;
+                const displayName = item.product_name ? `(${item.product_id}) ${item.product_name}` : `(${item.product_id}) 無紀錄商品名稱`;
+                if (item.stock_quantity > 0) {
+                  option.textContent = displayName;
+                } else {
+                  option.textContent = displayName + '（無庫存）';
+                }
+                
                 productResultsAllDisabled = false; // 有搜到至少一個啟用的商品
                 productResults.classList.add("show");
                 productResults.appendChild(option);
@@ -126,7 +129,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 option.addEventListener("click", function () {
                   // 如果已存在此商品，不能新增
                   if (addedProductIds.has(item.product_id)) {
-                    productResultsHelp.innerText = `(${item.product_id}) ${item.product_name}已存在於訂單中`;
+                    productResultsHelp.innerText = `(${item.product_id}) ${item.product_name} 已存在於訂單中`;
+                  } else if (item.stock_quantity < 1) {
+                    productResultsHelp.innerText = `(${item.product_id}) ${item.product_name} 無庫存`;
                   } else {
                     addedProductIds.add(item.product_id);
 

@@ -35,17 +35,19 @@ $themeTime = intval($_POST['theme_time']);
 $intervals = intval($_POST['intervals']);
 $difficulty = intval($_POST['difficulty']);
 
-$i = count($_FILES["uploadFile"]["name"]); // 計算上傳文件數量
+$i = count($_FILES["uploadFile"]["name"]); // 计算上传文件数量
 $uploadResults = [];
 for ($j = 0; $j < $i; $j++) {
   if ($_FILES["uploadFile"]["error"][$j] == 0) {
-    if (move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$j], "imgs/" . $_FILES["uploadFile"]["name"][$j])) {
-      $uploadResults[] = "上傳成功";
+    $fileName = $_FILES["uploadFile"]["name"][$j];
+    if (move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$j], "imgs/" . $fileName)) {
+      $uploadResults[] = basename($fileName); // 将成功上传的文件名添加到数组中，不包含路径
     } else {
       $uploadResults[] = "上傳失敗";
     }
   }
 }
+
 
 $output['uploadResults'] = $uploadResults;
 

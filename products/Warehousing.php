@@ -44,6 +44,7 @@ require __DIR__ . '/db_select/select_warehousing.php';
                         <th scope="col">編號</th>
                         <th scope="col">入庫日期</th>
                         <th scope="col">入庫人員</th>
+                        <th scope="col">最後編輯人員</th>
                         <th scope="col" class="text-center">操作</th>
 
                     </tr>
@@ -56,6 +57,7 @@ require __DIR__ . '/db_select/select_warehousing.php';
                             <td><?= $r['warehousing_id'] ?></td>
                             <td><?= $r['warehousing_date'] ?></td>
                             <td><?= $r['warehousing_person'] ?></td>
+                            <td><?= $r['last_modified_by'] ?></td>
 
                             <!-- 按鈕 -->
                             <td class="text-end">

@@ -40,16 +40,18 @@ $i = count($_FILES["uploadFile"]["name"]); // 計算上傳文件數量
 $uploadedImagePath = null;
 for ($j = 0; $j < $i; $j++) {
   if ($_FILES["uploadFile"]["error"][$j] == 0) {
-    $targetPath = "imgs/" . $_FILES["uploadFile"]["name"][$j];
+    $fileName = $_FILES["uploadFile"]["name"][$j];
+    $targetPath = "imgs/" . $fileName;
     if (move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$j], $targetPath)) {
-      $output['uploadResults'][] = "上傳成功: " . $_FILES["uploadFile"]["name"][$j];
+      $output['uploadResults'][] = "上傳成功: " . $fileName;
       // 將成功上傳的圖片路徑存儲在變量中
-      $uploadedImagePath = $targetPath;
+      $uploadedImagePath = $fileName;
     } else {
-      $output['uploadResults'][] = "上傳失敗: " . $_FILES["uploadFile"]["name"][$j];
+      $output['uploadResults'][] = "上傳失敗: " . $fileName;
     }
   }
 }
+
 
 // 更新数据库
 $sql = "UPDATE `themes` SET 

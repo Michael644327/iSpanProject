@@ -67,7 +67,7 @@ try {
     $result = $district_data[rand(0, count($district_data) - 1)];
 
     $district_id = $result['id'];
-    $address_line = $road[rand(1, 25)] . rand(1, 150) . '巷' . rand(1, 150) . '號';
+    $address_line = $road[rand(0, 24)] . rand(1, 150) . '巷' . rand(1, 150) . '號';
     $receiver = getRandomArray($lasts) . getRandomArray($firsts);
     $mobile_phone = '09' . getRandomText(8, $number);
     $type = '0';

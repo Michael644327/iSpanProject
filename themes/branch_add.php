@@ -24,9 +24,9 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </style>
 
 
-<div class="container mt-5">
+<div class="container-fluid">
   <div class="row">
-    <div class="col-10">
+    <div class="col-12">
       <div class="card">
         <div class="card-body">
           <form name="form1" class="p-3" onsubmit="sendData(event)">
@@ -36,14 +36,12 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
               <div class="form-text"></div>
             </div>
 
-            <div class="mb-4 col-10">
+            <div class="mb-4 col-8">
               <label class="form-label fw-bold">遊玩行程主題</label><br>
-              <?php foreach ($themes as $theme): ?>
+              <?php foreach ($themes as $theme) : ?>
                 <div class="form-check form-check-inline me-3 mb-3">
-                  <input class="form-check-input" type="checkbox" id="theme_<?php echo $theme['theme_id']; ?>"
-                    name="theme_id[]" value="<?php echo $theme['theme_id']; ?>">
-                  <label class="form-check-label"
-                    for="theme_<?php echo $theme['theme_id']; ?>"><?php echo $theme['theme_name']; ?></label>
+                  <input class="form-check-input" type="checkbox" id="theme_<?php echo $theme['theme_id']; ?>" name="theme_id[]" value="<?php echo $theme['theme_id']; ?>">
+                  <label class="form-check-label" for="theme_<?php echo $theme['theme_id']; ?>"><?php echo $theme['theme_name']; ?></label>
                 </div>
               <?php endforeach; ?>
               <div class="form-text"></div>
@@ -83,8 +81,7 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
               <div class="mb-4 col-10">
                 <label for="branch_address" class="form-label fw-bold">地址</label>
-                <textarea class="form-control" id="branch_address" name="branch_address" cols="30" rows="3"
-                  placeholder="請輸入地址"></textarea>
+                <textarea class="form-control" id="branch_address" name="branch_address" cols="30" rows="3" placeholder="請輸入地址"></textarea>
                 <div class="form-text"></div>
               </div>
             </div>
@@ -100,8 +97,7 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <!-- Modal bt 彈跳視窗-->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -214,9 +210,9 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
       const fd = new FormData(document.form1);
 
       fetch('branch_add_api.php', {
-        method: 'POST',
-        body: fd, // Content-Type: multipart/form-data
-      }).then(r => r.json())
+          method: 'POST',
+          body: fd, // Content-Type: multipart/form-data
+        }).then(r => r.json())
         .then(data => {
           console.log(data);
           if (data.success) {
@@ -230,6 +226,5 @@ $themes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
   };
   const myModal = new bootstrap.Modal('#staticBackdrop');
-
 </script>
 <?php include __DIR__ . '/../parts/html-foot.php' ?>

@@ -39,25 +39,31 @@ if ($totalRows) {
 ?>
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include __DIR__ . '/../parts/bt-navbar.php' ?>
+<?php include '../products/components/navbar.php' ?>
+
+<style>
+  .align-middle {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-top: 10px;
+    /* 這個是為了讓內容在垂直方向上居中對齊 */
+  }
+</style>
 
 
-<div class="container-fluid pt-5">
-  <div class="container">
+<div class="container-fluid p-5">
+  <div class="container-fluid ">
     <div class="row">
       <!-- 右邊表格 -->
       <div class="col-12">
         <!-- 分頁膠囊 -->
         <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
           <li class="nav-item me-3" role="presentation">
-            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill"
-              data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-              aria-selected="true">分店列表</button>
+            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">分店列表</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill"
-              data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-              aria-selected="false">新增分店</button>
+            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">新增分店</button>
           </li>
           <li class="ms-auto">
 
@@ -82,7 +88,7 @@ if ($totalRows) {
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
             <!-- 表單 -->
-            <table id="branchListTable" class="table table-striped">
+            <table id="branchListTable" class="table table-striped table-hover">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -92,76 +98,78 @@ if ($totalRows) {
                   <th scope="col">營業時間</th>
                   <th scope="col">結束時間</th>
                   <th scope="col">分店狀態</th>
-                  <th scope="col"><i class="fa-solid fa-user-check"> 預約</i></th>
-                  <th scope="col"><i class="fa-solid fa-file-lines"></i>
-                  <th scope="col"><i class="fa-solid fa-pen-to-square"></i></th>
+                  <th scope="col"><i class="fa-solid fa-user-check"> 預約清單</i></th>
+                  <th scope="col"><i class="fa-solid fa-pen-to-square"> 編輯</i></th>
                   <th scope="col"><i class="fa-solid fa-trash"></i></th>
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($rows as $r): ?>
+                <?php foreach ($rows as $r) : ?>
                   <tr>
-                    <td><?= $r['id'] ?></td>
-                    <td><?= $r['branch_name'] ?></td>
-                    <td><?= htmlentities($r['branch_address']) ?></td>
-                    <td><?= $r['branch_phone'] ?></td>
-                    <td><?= $r['open_time'] ?></td>
-                    <td><?= $r['close_time'] ?></td>
-                    <td><?= $r['branch_status'] ?></td>
                     <td>
-                      <a href="reservation_list.php?id=<?= $r['id'] ?>">
-                        <i class="fa-solid fa-user-check"> 預約</i></i>
-                      </a>
+                      <div class="align-middle"><?= $r['id'] ?></div>
                     </td>
                     <td>
-                      <a href="branch_content.php?id=<?= $r['id'] ?>">
-                        <i class="fa-solid fa-file-lines text-secondary"></i>
-                      </a>
+                      <div class="align-middle"><?= $r['branch_name'] ?></div>
                     </td>
                     <td>
-                      <a href="branch_edit.php?id=<?= $r['id'] ?>">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                      </a>
+                      <div class="align-middle"><?= htmlentities($r['branch_address']) ?></div>
                     </td>
-                    <td><a href="branch_delete.php?id=<?= $r['id'] ?>"
-                        onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
-                        <i class="fa-solid fa-trash text-danger"></i>
-                      </a></td>
+                    <td>
+                      <div class="align-middle"><?= $r['branch_phone'] ?></div>
+                    </td>
+                    <td>
+                      <div class="align-middle"><?= $r['open_time'] ?></div>
+                    </td>
+                    <td>
+                      <div class="align-middle"><?= $r['close_time'] ?></div>
+                    </td>
+                    <td>
+                      <div class="align-middle"><?= $r['branch_status'] ?></div>
+                    </td>
+                    <td>
+                      <div class="align-middle"><a href="branch_reservation_details.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-user-check"> 預約</i></a></div>
+                    </td>
+                    <td>
+                      <div>
+                        <a class="btn btn-primary" href="branch_edit.php?id=<?= $r['id'] ?>">
+                          <i class="fa-solid fa-pen-to-square"> 編輯</i>
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <a class="btn btn-danger" href="branch_delete.php?id=<?= $r['id'] ?>" onclick="return confirm('是否要刪除編號為<?= $r['id'] ?>的資料')">
+                          <i class="fa-solid fa-trash"></i> 刪除
+                        </a>
+                      </div>
+                    </td>
                   </tr>
                 <?php endforeach; ?>
               </tbody>
+
             </table>
             <!-- 分頁按鈕 -->
             <div class="col-12 d-flex justify-content-end mt-5">
               <nav aria-label="Page navigation example m-auto">
                 <ul class="pagination">
-                  <li class="page-item ">
-                    <a class="page-link" href="#">
-                      <i class="fa-solid fa-angles-left"></i>
-                    </a>
-                  </li>
-                  <li class="page-item ">
-                    <a class="page-link" href="#">
+
+                  <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= $page - 1 ?>" aria-label="Previous">
                       <i class="fa-solid fa-angle-left"></i>
                     </a>
                   </li>
-                  <?php for ($i = $page - 5; $i <= $page + 5; $i++):
-                    if ($i >= 1 and $i <= $totalPages): ?>
-                      <li class="page-item <?= $page == $i ? 'active' : '' ?> ">
-                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                      </li>
-                    <?php endif;
-                  endfor ?>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
+                  <?php for ($i = max(1, $page - 5); $i <= min($page + 5, $totalPages); $i++) : ?>
+                    <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                      <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                    </li>
+                  <?php endfor ?>
+                  <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= $page + 1 ?>" aria-label="Next">
                       <i class="fa-solid fa-angle-right"></i>
                     </a>
                   </li>
-                  <li class="page-item ">
-                    <a class="page-link" href="#">
-                      <i class="fa-solid fa-angles-right"></i>
-                    </a>
-                  </li>
+
                 </ul>
               </nav>
             </div>
@@ -180,13 +188,13 @@ if ($totalRows) {
 <?php include __DIR__ . '/../parts/scripts.php' ?>
 
 <script>
-  document.getElementById('searchForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // 阻止表单提交
+  document.getElementById('searchForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // 阻止表單提交
 
     var formData = new FormData(this);
-    var queryString = new URLSearchParams(formData).toString(); // 将表单数据转换为 URL 查询字符串
+    var queryString = new URLSearchParams(formData).toString(); // 將表單數據轉換為 URL 查詢字符串
 
-    fetch('branch_list_search.php?' + queryString) // 将查询字符串附加到 URL 中
+    fetch('branch_list_search.php?' + queryString) // 將查詢字符串附加到 URL 中
       .then(response => response.json())
       .then(data => {
         var tableBody = document.createElement('tbody');
@@ -202,20 +210,15 @@ if ($totalRows) {
           <td>${branch.branch_status}</td>
           <td><a href="branch_content.php?id=${branch.id}"><i class="fa-solid fa-file-lines text-secondary"></i></a></td>
           <td><a href="branch_edit.php?id=${branch.id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
-          <td><a href="branch_delete.php?id=${branch.id}" onclick="return confirm('是否要刪除編號為${branch.id}的資料')"><i class="fa-solid fa-trash text-danger"></i></a></td>
+          <td><a class="btn btn-danger" href="branch_delete.php?id=${branch.id}" onclick="return confirm('是否要刪除編號為${branch.id}的資料')"><i class="fa-solid fa-trash"></i> 刪除</a></td>
         `;
           tableBody.appendChild(row);
         });
-        // 更新表格内容
-        var branchListTable = document.getElementById('branchListTable');
-        branchListTable.innerHTML = '';
-        branchListTable.appendChild(tableBody);
-      })
-      .catch(error => {
-        console.error('Error:', error);
+        var table = document.getElementById('branchListTable');
+        table.querySelector('tbody').remove(); // 移除先前的 tbody 元素
+        table.appendChild(tableBody); // 添加新的 tbody 元素
       });
   });
-
 </script>
 
 <?php include __DIR__ . '/../parts/html-foot.php' ?>

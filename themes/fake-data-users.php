@@ -2,7 +2,7 @@
 // exit; #新增完後面資料後，因為怕以後不小心點到，加上這行點到會直接離開程式
 try {
 
-    require __DIR__ . '/../../config/pdo-connect.php';
+    require __DIR__ . '/../config/pdo-connect.php';
 
     $pdo->beginTransaction();
 
@@ -83,7 +83,7 @@ try {
         $nick_name = $name;
         $gender = rand(0, 1);
         $t = rand(strtotime('1985-01-01'), strtotime('2000-01-01'));
-        $birthday =  date('Y-m-d', $t);
+        $birthday = date('Y-m-d', $t);
         $mobile_phone = '09' . getRandomText(8, $number);
         $mobile_barcode = '/' . getRandomText(7, $all);
         $gui_number = getRandomText(8, $number);

@@ -27,3 +27,4 @@ try {
     // 處理例外
     echo "刪除分店時出錯：" . $e->getMessage();
 }
+

@@ -36,6 +36,7 @@ if ($totalRows) {
         join `themes` on tour = themes.theme_id
         join `teams_status` on team_status = status_id
         left join `teams_members` on team_id = join_team_id
+        WHERE `team_display` = 1
         GROUP BY team_id
         ORDER BY team_id ASC LIMIT %s, %s",
         ($page - 1) * $perPage,
@@ -100,6 +101,10 @@ if ($totalRows) {
                                         <a href="./team_edit.php?team_id=<?= $r['team_id'] ?>">
                                         <button type="button" class="btn btn-primary">修改</button>
                                         </a>
+                                        <a href="javascript: deleteOne(<?= $r['team_id'] ?>)">
+                                        <button type="button" class="btn btn-danger">刪除</button>
+                                        </a>
+
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -160,7 +165,7 @@ if ($totalRows) {
 <script>
     const deleteOne = (team_id) => {
     if (confirm(`是否要刪除編號為 ${team_id} 的資料?`)) {
-      location.href = `/team_delete.php?team_id=${team_id}`;
+      location.href = `./team_delete.php?team_id=${team_id}`;
     }
   }
 </script>

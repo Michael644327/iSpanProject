@@ -10,7 +10,7 @@ if (!empty($_GET['theme_name'])) {
   $placeholders[] = '%' . $_GET['theme_name'] . '%';
 }
 
-$sql = "SELECT * FROM `themes`";
+$sql = "SELECT `theme_id`,`theme_name`,`difficulty`,`suitable_players`,`theme_time`,`start_date`,`end_date` FROM `themes`"; // 选择要查询的字段
 if (!empty($where)) {
   $sql .= " WHERE " . $where;
 }
@@ -24,6 +24,5 @@ $rows = $stmt->fetchAll();
 header('Content-Type: application/json');
 echo json_encode($rows);
 
-// 結束腳本
+// 结束脚本
 exit;
-

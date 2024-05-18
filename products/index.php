@@ -14,7 +14,8 @@ include 'db_select/select_page.php';
 
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include '../parts/bt-navbar.php' ?>
+<?php include 'components/navbar.php' ?>
+
 
 <!-- 主內容 -->
 <div class="container mt-3">
@@ -26,12 +27,12 @@ include 'db_select/select_page.php';
         <div class="col-2">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="index.php">所有商品</a>
+                    <a class="nav-link" aria-current="page" href="index.php"><i class="fa-solid fa-ghost"></i></i>所有商品</a>
                 </li>
 
                 <?php foreach ($category_all_row as $r) : ?>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="?category_id=<?= $r['category_id'] ?>"><?= $r['category_name'] ?></a>
+                        <a class="nav-link" aria-current="page" href="?category_id=<?= $r['category_id'] ?>"><i class="fa-solid fa-ghost"></i></i><?= $r['category_name'] ?></a>
                     </li>
                 <?php endforeach; ?>
 

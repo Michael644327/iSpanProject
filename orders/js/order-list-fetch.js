@@ -227,7 +227,7 @@ function buildDetailsTable(details) {
           <th>商品編號</th>
           <th>商品名稱</th>
           <th>商品單價</th>
-          <th>商品庫存</th>
+          <th>數量</th>
           <th>商品總金額</th>
         </tr>
       </thead>

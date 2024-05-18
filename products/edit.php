@@ -45,7 +45,7 @@ $product_img_row = $stmt->fetchAll();
 <div class="container mt-3 py-2">
     <div class="row mt-5">
         <div class="col-10 col-lg-6 mx-auto">
-            <h2 class="text-center p-3 mt-3">商品資料編輯</h2>
+            <h2 class="text-center p-3 mt-3"><i class="fa-solid fa-ghost"></i></i>商品資料編輯</h2>
 
             <form name="form1" class="needs-validation" novalidate onsubmit="sendData(event)">
 

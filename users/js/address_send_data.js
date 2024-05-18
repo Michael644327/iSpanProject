@@ -24,6 +24,7 @@ const addressSendData = function (e) {
     $address_id.eq(i).removeData("tag");
     let $dataTag = $address_id.eq(i).data("tag");
 
+    console.log($errorText[i]);
     $errorText[i].innerHTML = "";
     //驗證是否為空值
     let isPass = true;

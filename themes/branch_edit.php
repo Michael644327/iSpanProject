@@ -26,7 +26,6 @@ if (!empty($row['theme_id'])) {
 
 $pageName = 'branch_add';
 
-// 獲取主題資料
 $branchThemesSql = "SELECT t.theme_id AS t_theme_id, bt.*, t.* 
 FROM branch_themes AS bt
 INNER JOIN themes AS t
@@ -34,17 +33,23 @@ ON t.theme_id = bt.theme_id
 WHERE branch_id = ?
 ";
 
-$branchThemes = [];
 $branchThemesStmt = $pdo->prepare($branchThemesSql);
 $branchThemesStmt->execute([$branchId]);
 $branchThemes = $branchThemesStmt->fetchAll();
 
+$selectedThemeIds = array_column($branchThemes, 't_theme_id');
+
+$themesSql = "SELECT theme_id, theme_name FROM themes";
+$themesStmt = $pdo->query($themesSql);
+$themes = $themesStmt->fetchAll();
+
+$selectedThemeIds = array_column($branchThemes, 't_theme_id');
 
 
 $themesSql = "SELECT theme_id, theme_name FROM themes";
 $themesStmt = $pdo->query($themesSql);
 $themes = $themesStmt->fetchAll();
-$selectedThemeIds = [];
+
 $selectedThemeIds = array_column($branchThemes, 't_theme_id');
 
 ?>
@@ -60,13 +65,20 @@ $selectedThemeIds = array_column($branchThemes, 't_theme_id');
 </style>
 
 
-<div class="container mt-5">
+<div class="container my-5">
     <div class="row">
         <div class="col-10">
+            <ul class="nav nav-pills mb-4 d-flex align-items-center" id="pills-tab" role="tablist">
+                <li class="nav-item me-4" role="presentation">
+                    <a href="branch_list.php"><button type="button" class="btn btn-outline-primary rounded-pill"><i class="fa-solid fa-arrow-left"></i> 回分店</button></a>
+                </li>
+                <li class="nav-item me-4 d-flex align-items-center pt-2">
+                    <h4 class="fw-bold"><i class="fa-solid fa-ghost"> </i> 編輯分店</h4>
+                </li>
+            </ul>
             <div class="card">
                 <div class="card-body">
-                    <form name="form1" class="p-3" onsubmit="sendData(event)"
-                        action="branch_edit.php?id=<?php echo $branchId; ?>" method="post">
+                    <form name="form1" class="p-3" onsubmit="sendData(event)" action="branch_edit.php?id=<?php echo $branchId; ?>" method="post">
 
                         <div class="mb-4 col-2">
                             <label for="id" class="form-label">編號</label>
@@ -75,45 +87,37 @@ $selectedThemeIds = array_column($branchThemes, 't_theme_id');
 
                         <div class="mb-4 col-5">
                             <label for="branch_name" class="form-label fw-bold">分店名字</label>
-                            <input type="text" class="form-control" id="branch_name" name="branch_name"
-                                value="<?= $row['branch_name'] ?>">
+                            <input type="text" class="form-control" id="branch_name" name="branch_name" value="<?= $row['branch_name'] ?>">
                             <div class="form-text"></div>
                         </div>
 
                         <div class="mb-4 col-10">
-                            <label class="form-label fw-bold">遊玩行程主題</label><br>
-                            <?php foreach ($themes as $theme): ?>
-                                <div class="form-check form-check-inline me-3 mb-3">
-                                    <input class="form-check-input" type="checkbox"
-                                        id="theme_<?php echo $theme['theme_id']; ?>" name="theme_id[]"
-                                        value="<?php echo $theme['theme_id']; ?>" <?php if (in_array($theme['theme_id'], $selectedThemeIds))
-                                               echo 'checked'; ?>>
-                                    <label class="form-check-label"
-                                        for="theme_<?php echo $theme['theme_id']; ?>"><?php echo $theme['theme_name']; ?></label>
-                                </div>
-                            <?php endforeach; ?>
-                            <div class="form-text"></div>
+                            <label for="branch_name" class="form-label fw-bold">遊玩行程主題</label>
+                            <div>
+                                <?php foreach ($themes as $theme) : ?>
+                                    <div class="form-check form-check-inline me-3 mb-3">
+                                        <input class="form-check-input" type="checkbox" id="theme_<?php echo $theme['theme_id']; ?>" name="theme_id[]" value="<?php echo $theme['theme_id']; ?>" <?php if (in_array($theme['theme_id'], $selectedThemeIds)) echo 'checked'; ?>>
+                                        <label class="form-check-label" for="theme_<?php echo $theme['theme_id']; ?>"><?php echo $theme['theme_name']; ?></label>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
-
 
                         <div class="mb-4 col-5">
                             <label for="branch_phone" class="form-label fw-bold">電話</label>
-                            <input type="text" class="form-control" id="branch_phone" name="branch_phone"
-                                placeholder="請輸入電話" value="<?= $row['branch_phone'] ?>">
+                            <input type="text" class="form-control" id="branch_phone" name="branch_phone" placeholder="請輸入電話" value="<?= $row['branch_phone'] ?>">
                             <div class="form-text"></div>
                         </div>
 
                         <div class="row">
                             <div class="mb-4 col-5">
                                 <label for="open_time" class="form-label fw-bold">開門時間</label>
-                                <input type="text" class="form-control" id="open_time" name="open_time"
-                                    placeholder="請輸入時間" value="<?= $row['open_time'] ?>">
+                                <input type="text" class="form-control" id="open_time" name="open_time" placeholder="請輸入時間" value="<?= $row['open_time'] ?>">
                                 <div class="form-text"></div>
                             </div>
                             <div class="mb-4 col-5">
                                 <label for="close_time" class="form-label fw-bold">閉門時間</label>
-                                <input type="text" class="form-control" id="close_time" name="close_time"
-                                    placeholder="請輸入時間" value="<?= $row['close_time'] ?>">
+                                <input type="text" class="form-control" id="close_time" name="close_time" placeholder="請輸入時間" value="<?= $row['close_time'] ?>">
                                 <div class="form-text"></div>
                             </div>
                         </div>
@@ -121,8 +125,7 @@ $selectedThemeIds = array_column($branchThemes, 't_theme_id');
                         <div class="row">
                             <div class="mb-4 col-5">
                                 <label for="branch_status" class="form-label fw-bold">營業狀態</label>
-                                <select class="form-select" aria-label="Default select example" id="branch_status"
-                                    name="branch_status">
+                                <select class="form-select" aria-label="Default select example" id="branch_status" name="branch_status">
                                     <option value="" selected disabled>請選擇狀態</option>
                                     <option value="新開幕" <?= $row['branch_status'] == "新開幕" ? 'selected' : '' ?>>新開幕
                                     </option>
@@ -139,8 +142,7 @@ $selectedThemeIds = array_column($branchThemes, 't_theme_id');
 
                             <div class="mb-4 col-10">
                                 <label for="branch_address" class="form-label fw-bold">地址</label>
-                                <textarea class="form-control" id="branch_address" name="branch_address" cols="30"
-                                    rows="3" placeholder="請輸入地址"><?= $row['branch_address'] ?></textarea>
+                                <textarea class="form-control" id="branch_address" name="branch_address" cols="30" rows="3" placeholder="請輸入地址"><?= $row['branch_address'] ?></textarea>
                                 <div class="form-text"></div>
                             </div>
 
@@ -157,8 +159,7 @@ $selectedThemeIds = array_column($branchThemes, 't_theme_id');
 </div>
 
 <!-- Modal bt 彈跳視窗-->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -180,8 +181,7 @@ $selectedThemeIds = array_column($branchThemes, 't_theme_id');
 </div>
 
 
-<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -206,6 +206,9 @@ $selectedThemeIds = array_column($branchThemes, 't_theme_id');
 
 
 <script>
+    const selectedThemes = Array.from(document.querySelectorAll('input[name="theme_id[]"]:checked'));
+    // 在这里检查 selectedThemes 是否包含了正确的已选择主题信息
+
     const branchId = <?= $branchId ?>;
     const nameField = document.getElementById('branch_name');
     const phoneField = document.getElementById('branch_phone');
@@ -294,9 +297,9 @@ $selectedThemeIds = array_column($branchThemes, 't_theme_id');
             fd.append('id', branchId); // 確保分店的 ID 被添加到 FormData 對象中
 
             fetch('branch_edit_api.php', {
-                method: 'POST',
-                body: fd, // Content-Type: multipart/form-data
-            }).then(r => r.json())
+                    method: 'POST',
+                    body: fd, // Content-Type: multipart/form-data
+                }).then(r => r.json())
                 .then(data => {
                     console.log(data);
                     if (data.success) {

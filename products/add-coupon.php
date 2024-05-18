@@ -1,10 +1,10 @@
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include '../parts/bt-navbar.php' ?>
+<?php include 'components/navbar.php' ?>
 
 <div class="container mt-2 py-2">
     <div class="row">
         <div class="col-10 col-lg-6 mx-auto">
-            <h2 class="text-center p-3 mt-3">新增優惠券</h2>
+            <h2 class="text-center p-3 mt-3"><i class="fa-solid fa-ghost"></i></i>新增優惠券</h2>
 
 
 

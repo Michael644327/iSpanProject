@@ -47,8 +47,8 @@
                     <!-- --------- -->
                     <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="layout-static.html">分店管理</a>
-                            <a class="nav-link" href="layout-static.html">主題管理</a>
+                            <a class="nav-link" href="branch_list.php">分店管理</a>
+                            <a class="nav-link" href="theme_list.php">主題管理</a>
                         </nav>
                     </div>
                     <!-- --------- -->

@@ -39,25 +39,31 @@ if ($totalRows) {
 ?>
 
 <?php include __DIR__ . '/../parts/html-head.php' ?>
-<?php include __DIR__ . '/../parts/bt-navbar.php' ?>
+<?php include '../products/components/navbar.php' ?>
+<style>
+  .cell-content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    /* 使內容垂直置中 */
+    margin-top: 5px;
+  }
+</style>
 
-<div class="container-fluid pt-5">
+
+<div class="container-fluid p-5">
   <!-- 分頁膠囊   -->
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <!-- 右邊表格 -->
       <div class="col-12">
         <!-- 分頁膠囊 -->
         <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
           <li class="nav-item me-3" role="presentation">
-            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill"
-              data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-              aria-selected="true">主題列表</button>
+            <button class="nav-link active rounded-pill fw-bold" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">主題列表</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill"
-              data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-              aria-selected="false">新增主題</button>
+            <button class="nav-link rounded-pill fw-bold" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">新增主題</button>
           </li>
           <li class="ms-auto">
 
@@ -82,7 +88,7 @@ if ($totalRows) {
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
             <!-- 表單 -->
-            <table id="themeListTable" class="table table-striped">
+            <table id="themeListTable" class="table table-striped table-hover">
               <thead>
                 <tr id="themeListTableHead">
                   <th scope="col">#</th>
@@ -92,70 +98,82 @@ if ($totalRows) {
                   <th scope="col">時長</th>
                   <th scope="col">開始日期</th>
                   <th scope="col">結束日期</th>
-                  <th scope="col"><i class="fa-solid fa-file-lines"></i></th>
-                  <th scope="col"><i class="fa-solid fa-pen-to-square"></i></th>
-                  <th scope="col"><i class="fa-solid fa-trash"></i></th>
+                  <th scope="col"><i class="fa-solid fa-file-lines"> 檢視</i></th>
+                  <th scope="col"><i class="fa-solid fa-pen-to-square"> 編輯</i></th>
+                  <th scope="col"><i class="fa-solid fa-trash"></i> 刪除</th>
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($rows as $r): ?>
+                <?php foreach ($rows as $r) : ?>
                   <tr>
-                    <td><?= $r['theme_id'] ?></td>
-                    <td><?= $r['theme_name'] ?></td>
-                    <td><?= $r['difficulty'] ?></td>
-                    <td><?= $r['suitable_players'] ?></td>
-                    <td><?= $r['theme_time'] ?></td>
-                    <td><?= $r['start_date'] ?></td>
-                    <td><?= $r['end_date'] ?></td>
                     <td>
-                      <a href="theme_content.php?theme_id=<?= $r['theme_id'] ?>">
-                        <i class="fa-solid fa-file-lines text-secondary"></i>
-                      </a>
+                      <div class="cell-content"><?= $r['theme_id'] ?></div>
                     </td>
                     <td>
-                      <a href="theme_edit.php?theme_id=<?= $r['theme_id'] ?>">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                      </a>
+                      <div class="cell-content"><?= $r['theme_name'] ?></div>
                     </td>
-                    <td><a href="theme_delete.php?theme_id=<?= $r['theme_id'] ?>"
-                        onclick="return confirm('是否要刪除編號為<?= $r['theme_id'] ?>的資料')">
-                        <i class="fa-solid fa-trash text-danger"></i>
-                      </a></td>
+                    <td>
+                      <div class="cell-content"><?= $r['difficulty'] ?></div>
+                    </td>
+                    <td>
+                      <div class="cell-content"><?= $r['suitable_players'] ?></div>
+                    </td>
+                    <td>
+                      <div class="cell-content"><?= $r['theme_time'] ?></div>
+                    </td>
+                    <td>
+                      <div class="cell-content"><?= $r['start_date'] ?></div>
+                    </td>
+                    <td>
+                      <div class="cell-content"><?= $r['end_date'] ?></div>
+                    </td>
+                    <td>
+                      <div>
+                        <a class="btn btn-dark" href="theme_content.php?theme_id=<?= $r['theme_id'] ?>">
+                          <i class="fa-solid fa-file-lines"> 檢視</i>
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <a class="btn btn-primary" href="theme_edit.php?theme_id=<?= $r['theme_id'] ?>">
+                          <i class="fa-solid fa-pen-to-square"> 編輯</i>
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <a class="btn btn-danger" href="theme_delete.php?theme_id=<?= $r['theme_id'] ?>" onclick="return confirm('是否要刪除編號為<?= $r['theme_id'] ?>的資料')">
+                          <i class="fa-solid fa-trash text-white"> 刪除</i>
+                        </a>
+                      </div>
+                    </td>
                   </tr>
                 <?php endforeach; ?>
               </tbody>
+
             </table>
             <!-- 分頁按鈕 -->
             <div class="col-12 d-flex justify-content-end mt-5">
               <nav aria-label="Page navigation example m-auto">
                 <ul class="pagination">
-                  <li class="page-item ">
-                    <a class="page-link" href="#">
-                      <i class="fa-solid fa-angles-left"></i>
-                    </a>
-                  </li>
-                  <li class="page-item ">
-                    <a class="page-link" href="#">
+
+                  <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= $page - 1 ?>" aria-label="Previous">
                       <i class="fa-solid fa-angle-left"></i>
                     </a>
                   </li>
-                  <?php for ($i = $page - 5; $i <= $page + 5; $i++):
-                    if ($i >= 1 and $i <= $totalPages): ?>
-                      <li class="page-item <?= $page == $i ? 'active' : '' ?> ">
-                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                      </li>
-                    <?php endif;
-                  endfor ?>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
+                  <?php for ($i = max(1, $page - 5); $i <= min($page + 5, $totalPages); $i++) : ?>
+                    <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                      <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                    </li>
+                  <?php endfor ?>
+                  <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= $page + 1 ?>" aria-label="Next">
                       <i class="fa-solid fa-angle-right"></i>
                     </a>
                   </li>
-                  <li class="page-item ">
-                    <a class="page-link" href="#">
-                      <i class="fa-solid fa-angles-right"></i>
-                    </a>
-                  </li>
+
                 </ul>
               </nav>
             </div>
@@ -173,7 +191,7 @@ if ($totalRows) {
 <?php include __DIR__ . '/../parts/scripts.php' ?>
 
 <script>
-  document.getElementById('searchForm').addEventListener('submit', function (event) {
+  document.getElementById('searchForm').addEventListener('submit', function(event) {
     event.preventDefault(); // 阻止表單提交
 
     var formData = new FormData(this);
@@ -193,14 +211,15 @@ if ($totalRows) {
         <td>${theme.theme_time}</td>
         <td>${theme.start_date}</td>
         <td>${theme.end_date}</td>
-        <td><a href="theme_content.php?theme_id=${theme.theme_id}"><i class="fa-solid fa-file-lines text-secondary"></i></a></td>
-        <td><a href="theme_edit.php?theme_id=${theme.theme_id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
-        <td><a href="theme_delete.php?theme_id=${theme.theme_id}" onclick="return confirm('是否要刪除編號為${theme.theme_id}的資料')"><i class="fa-solid fa-trash text-danger"></i></a></td>
+        <td><a class="btn btn-dark" href="theme_content.php?theme_id=${theme.theme_id}"><i class="fa-solid fa-file-lines"> 檢視</i></a></td>
+        <td><a class="btn btn-primary" href="theme_edit.php?theme_id=${theme.theme_id}"><i class="fa-solid fa-pen-to-square"> 編輯</i></a></td>
+        <td><a <a class="btn btn-danger" href="theme_delete.php?theme_id=${theme.theme_id}" onclick="return confirm('是否要刪除編號為${theme.theme_id}的資料')"><i class="fa-solid fa-trash text-white"> 刪除</i></a></td>
       `;
           tableBody.appendChild(row);
         });
-        document.getElementById('themeListTable').innerHTML = '';
-        document.getElementById('themeListTable').appendChild(tableBody)
+        var table = document.getElementById('themeListTable');
+        table.querySelector('tbody').remove(); // 移除先前的 tbody 元素
+        table.appendChild(tableBody); // 添加新的 tbody 元素
       });
   });
 </script>

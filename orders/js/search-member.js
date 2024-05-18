@@ -76,9 +76,11 @@ document.addEventListener('DOMContentLoaded', function () {
                   if (item.invoice_carrier_id) {
                     document.getElementById('useMobileInvoice').checked = true;
                     document.getElementById('mobileInvoice').value = item.invoice_carrier_id;
+                    document.getElementById('mobileInvoice').nextElementSibling.textContent = '';
                   }
                   if (item.tax_id) {
                     document.getElementById('taxId').value = item.tax_id;
+                    document.getElementById('taxId').nextElementSibling.textContent = '';
                   }
                   if (!item.invoice_carrier_id && item.tax_id) {
                     document.getElementById('useTaxId').checked = true;
