@@ -1,11 +1,10 @@
 <?php
 require __DIR__ . '/../config/pdo-connect.php';  // 引入資料庫設定
 
-// 取得所有商品
-include 'db_select/select_product.php';
+
 // 取得分類
 include 'db_select/select_category.php';
-// 取得分頁
+// 取得分頁及使用者搜尋結果
 include 'db_select/select_page.php';
 
 
@@ -46,9 +45,11 @@ include 'db_select/select_page.php';
             <nav class="navbar navbar-light bg-light">
                 <div class="container-fluid d-flex justify-content-between">
                     <!-- 搜尋 -->
-                    <form onsubmit="selectData()" class="d-flex" name="searchForm">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="my_search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    <form class="d-flex align-items-center m-0" name="searchForm">
+                        <div class="input-group">
+                            <input class="form-control me-2" type="search" placeholder="商品編號或名稱" aria-label="Search" name="my_search">
+                            <button class="btn btn-outline-success" type="submit">搜尋</button>
+                        </div>
                     </form>
 
                     <!-- 搜尋結束 -->
